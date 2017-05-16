@@ -2,15 +2,37 @@ using Gtk;
 
 public class ActionBar  : Gtk.Box {
 
+    Gtk.Button export_button;
+
     public ActionBar () {
         this.set_orientation (Orientation.HORIZONTAL);
         this.set_border_width (4);
-        this.set_spacing (4);
+        this.set_spacing (10);
 
-        Image img = new Image.from_icon_name ("window-close", Gtk.IconSize.MENU);
-    		Gtk.ToolButton button2 = new Gtk.ToolButton (img, null);
+        Gtk.Label ocr_label = new Gtk.Label ("<b>OCR</b>");
+        ocr_label.set_use_markup (true);
 
-        this.pack_start (button2, false, false, 0);
+		Gtk.Switch ocr_switch = new Gtk.Switch ();
+
+		ocr_switch.notify["active"].connect (() => {
+			if (ocr_switch.active) {
+				// Do something
+			} else {
+				// Do something else
+			}
+		});
+
+		ocr_switch.set_active (true);
+
+        this.pack_start (ocr_label, false, false, 0);
+        this.pack_start (ocr_switch, false, false, 0);
+
+        export_button = new Gtk.Button.with_label ("No scans selected");
+        export_button.clicked.connect (() => {
+			// Start export process
+		});
+
+        this.pack_end (export_button, false, false, 0);
 
     }
 }
