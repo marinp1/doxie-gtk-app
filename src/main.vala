@@ -2,6 +2,7 @@ using Gtk;
 
 public class App : Granite.Application {
 
+    Variables variables = new Variables ();
     GSSDP.ResourceBrowser resource_browser;
     GSSDP.Client client;
 
@@ -67,33 +68,10 @@ public class App : Granite.Application {
         Soup.URI parsed_uri = new Soup.URI (full_uri);
         string ip_address = parsed_uri.get_host ();
 
+        DoxieScanner scanner = new DoxieScanner (ip_address);
+
         print ("Scanner found at " + ip_address + "\n");
 
-        // Create HTTP hello request to scanner
-        // Generate scanner class
-
-        // DEMO
-      
-        try {
-          // Create a session:
-          var session = new Soup.Session ();
-
-          // Request a file:
-          Soup.Request request = session.request ("http://" + ip_address + ":8080/hello.json");
-          InputStream stream = request.send ();
-
-          // Print the content:
-          DataInputStream data_stream = new DataInputStream (stream);
-
-          string? line;
-          while ((line = data_stream.read_line ()) != null) {
-            stdout.puts (line);
-            stdout.putc ('\n');
-          }
-        } catch (Error e) {
-          stderr.printf ("Error: %s\n", e.message);
-        }
-      
       }
 
     }
