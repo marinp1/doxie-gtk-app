@@ -19,10 +19,9 @@ int main (string[] args) {
     window.set_position (Gtk.WindowPosition.CENTER);
     window.set_default_size (1280, 720);
     window.destroy.connect (Gtk.main_quit);
-
     window.set_titlebar (new CustomHeaderBar ());
 
-    Box pane = new Box (Orientation.VERTICAL, 12);
+    Box pane = new Box (Orientation.VERTICAL, 6);
 
     GSSDP.Client client = null;
 
@@ -45,8 +44,9 @@ int main (string[] args) {
 
     FlowBox layout = new FlowBox ();
     layout.set_valign (Align.START);
-    layout.column_spacing = 20;
-    layout.row_spacing = 20;
+    layout.activate_on_single_click = false;
+    layout.column_spacing = 0;
+    layout.row_spacing = 0;
     layout.set_selection_mode (SelectionMode.NONE);
     layout.homogeneous = false;
 
@@ -58,6 +58,7 @@ int main (string[] args) {
     }
 
     pane.pack_start (scrolled, true, true, 0);
+    pane.pack_start (new Gtk.Separator (Gtk.Orientation.HORIZONTAL), false, false, 0);
     pane.pack_start (new ActionBar (), false, false, 0);
 
     scrolled.add (layout);

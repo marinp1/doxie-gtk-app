@@ -10,12 +10,12 @@ public class Thumbnail : Gtk.Box {
 
         this.set_orientation (Orientation.VERTICAL);
         this.set_border_width (12);
-        this.set_spacing (8);
+        this.set_spacing (6);
 
         Pixbuf pixel_buffer;
 
         try {
-          pixel_buffer = new Pixbuf.from_file_at_scale (img_path, 200, 200, true);
+          pixel_buffer = new Pixbuf.from_file_at_scale (img_path, 160, 160, true);
           thumbnail_image = new Image.from_pixbuf (pixel_buffer);
           thumbnail_label = new Label ("somepath");
         } catch (GLib.Error ex) {
