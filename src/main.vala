@@ -61,17 +61,38 @@ public class App : Granite.Application {
     }
 
     public void device_found (string usn, GLib.List<string> locations) {
-
       if (usn.index_of ("urn:schemas-getdoxie-com:device:Scanner") != -1) {
 
         string full_uri = locations.nth (0).data;
-        Soup.URI parsed_uri = new Soup.URI ("http://192.168.1.100:8080/doxie/document");
-        string ip_address = uri.get_host ();
+        Soup.URI parsed_uri = new Soup.URI (full_uri);
+        string ip_address = parsed_uri.get_host ();
+
+        print ("Scanner found at " + ip_address + "\n");
 
         // Create HTTP hello request to scanner
         // Generate scanner class
 
-        print ("Scanner found at " + ip_address + "\n");
+        // DEMO
+      
+        try {
+          // Create a session:
+          var session = new Soup.Session ();
+
+          // Request a file:
+          Soup.Request request = session.request ("http://" + ip_address + ":8080/hello.json");
+          InputStream stream = request.send ();
+
+          // Print the content:
+          DataInputStream data_stream = new DataInputStream (stream);
+
+          string? line;
+          while ((line = data_stream.read_line ()) != null) {
+            stdout.puts (line);
+            stdout.putc ('\n');
+          }
+        } catch (Error e) {
+          stderr.printf ("Error: %s\n", e.message);
+        }
       
       }
 
