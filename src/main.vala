@@ -2,6 +2,9 @@ using Gtk;
 
 public class App : Granite.Application {
 
+    GSSDP.ResourceBrowser resource_browser;
+    GSSDP.Client client;
+
     public App () {
         Object (application_id: "com.github.marinp1.doxie-gtk-app",
         flags: ApplicationFlags.FLAGS_NONE);
@@ -13,12 +16,10 @@ public class App : Granite.Application {
         window.title = "Doxie Go WiFi Sync";
         window.set_border_width (12);
         window.set_position (Gtk.WindowPosition.CENTER);
-        window.set_default_size (1280, 720);
+        window.set_default_size (800, 800);
         window.set_titlebar (new CustomHeaderBar ());
 
         Box pane = new Box (Orientation.VERTICAL, 6);
-
-        GSSDP.Client client = null;
 
         try {
           GLib.MainContext ctx = GLib.MainContext.get_thread_default ();
@@ -27,12 +28,9 @@ public class App : Granite.Application {
           print (e.message);
         }
 
-        GSSDP.ResourceBrowser resource_browser = new GSSDP.ResourceBrowser (client, GSSDP.ALL_RESOURCES);
+        resource_browser = new GSSDP.ResourceBrowser (client, GSSDP.ALL_RESOURCES);
         resource_browser.resource_available.connect (device_found);
-        resource_browser.resource_unavailable.connect (device_lost);
-
         resource_browser.set_active (true);
-
 
         ScrolledWindow scrolled = new ScrolledWindow (null, null);
         scrolled.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
@@ -62,14 +60,21 @@ public class App : Granite.Application {
 
     }
 
-    // Loop through location, valid location is http://192.168.1.100:8080/doxie/document
-    // Or look for USN type uuid:16FAB4C8-1DD2-11B2-B86C-796C3CACE9D9::urn:schemas-getdoxie-com:device:Scanner:1
-    void device_found (string usn, GLib.List<string> locations) {
-      print (usn + "\n");
-    }
+    public void device_found (string usn, GLib.List<string> locations) {
 
-    void device_lost (string usn) {
-      print (usn + "\n");
+      if (usn.index_of ("urn:schemas-getdoxie-com:device:Scanner") != -1) {
+
+        string full_uri = locations.nth (0).data;
+        Soup.URI parsed_uri = new Soup.URI ("http://192.168.1.100:8080/doxie/document");
+        string ip_address = uri.get_host ();
+
+        // Create HTTP hello request to scanner
+        // Generate scanner class
+
+        print ("Scanner found at " + ip_address + "\n");
+      
+      }
+
     }
 
     public static int main (string[] args) {
