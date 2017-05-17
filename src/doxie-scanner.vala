@@ -2,7 +2,9 @@ public class DoxieScanner : GLib.Object {
 
     public string name;
     public bool password_protected;
+    public string ip_address;
     public string mac_address;
+    public string device_password;
 
     public DoxieScanner (string ip_address) {
         
