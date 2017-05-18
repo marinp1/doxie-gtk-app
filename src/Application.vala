@@ -21,7 +21,7 @@ public class App : Gtk.Application {
         window.set_border_width (12);
         window.set_position (Gtk.WindowPosition.CENTER);
         window.set_default_size (800, 800);
-        window.set_titlebar (new CustomHeaderBar ());
+        window.set_titlebar (new CustomHeader ());
 
         // Application main layout (scan listing and action bar)
         // TODO: better variable name
