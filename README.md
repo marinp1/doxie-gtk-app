@@ -1,6 +1,14 @@
 # Doxie WiFi Sync
 Unofficial GTK application for fetching scans from Doxie WiFi scanners with an easy-to-use UI. Basically acts as a wrapper for [Doxie's API](http://help.getdoxie.com/content/doxiego/05-advanced/03-wifi/04-api/Doxie-API-Developer-Guide.pdf), but will also similar features as in Doxie's official application such as OCR and scan pre-processing.
 
+## Installation
+
+PPA is available for Ubuntu 16.04
+
+1. sudo add-apt-repository ppa:patrik-marin/ppa
+2. sudo apt-get update
+3. sudo apt-get install gtk-doxie-app
+
 ## Manual installation
 
 For manual installation some dependencies are required.
