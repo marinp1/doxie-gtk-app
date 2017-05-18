@@ -21,11 +21,14 @@ public class App : Granite.Application {
         window.set_border_width (12);
         window.set_position (Gtk.WindowPosition.CENTER);
         window.set_default_size (800, 800);
+
+        window.set_size_request(800, 500);
+
         window.set_titlebar (new CustomHeader (this));
 
         // Application main layout (scan listing and action bar)
         // TODO: better variable name
-        Box pane = new Box (Orientation.VERTICAL, 6);
+        Box pane = new Box (Orientation.VERTICAL, 4);
 
         // Try to create a new SSDP client for device discovery
         try {
@@ -96,6 +99,7 @@ public class App : Granite.Application {
         }
 
         variables.selected_scanner = scanner;
+        CustomHeader.instance.update_combobox ();
 
         return true;
     }
