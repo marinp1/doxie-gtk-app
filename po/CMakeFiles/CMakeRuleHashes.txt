@@ -1,3 +1,0 @@
-# Hashes of file build rules.
-fb42481d16900073f03158b16a847bf4 com.github.marinp1.gtk-doxie-app_valac.stamp
-530a6c3cf12ab9b61a34704a091a6bae src/Application.c
