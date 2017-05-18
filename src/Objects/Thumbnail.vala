@@ -27,6 +27,6 @@ public class Thumbnail : Gtk.Box {
 
         this.pack_start (thumbnail_image, false, false, 0);
         this.pack_start (thumbnail_label, true, false, 0);
-
+        
     }
 }

@@ -1,6 +1,6 @@
 using Gtk;
 
-public class App : Gtk.Application {
+public class App : Granite.Application {
 
     // Initiate application variables
     public Variables variables = new Variables ();
@@ -15,7 +15,7 @@ public class App : Gtk.Application {
     }
 
     protected override void activate () {
-        
+
         // Main window for application
         ApplicationWindow window = new Gtk.ApplicationWindow (this);
         window.set_border_width (12);

@@ -10,9 +10,13 @@ public class CustomHeader : Gtk.HeaderBar  {
         this.spacing = 0;
 
         // Add refresh button to header bar
-        // TODO: Link button action for fetching scans
         Gtk.Image refresh_icon = new Gtk.Image.from_icon_name ("view-refresh", Gtk.IconSize.MENU);
         Gtk.ToolButton fetch_scans_btn = new Gtk.ToolButton (refresh_icon, null);
+        
+        fetch_scans_btn.clicked.connect (() => {
+            ScanHolder.instance.refresh_content ();
+        });
+
         this.pack_start (fetch_scans_btn);
 
         // Create menu content for preferences menu

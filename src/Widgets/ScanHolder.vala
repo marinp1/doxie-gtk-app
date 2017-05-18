@@ -3,6 +3,7 @@ using Gtk;
 public class ScanHolder : FlowBox {
 
     App app;
+    public static weak ScanHolder instance;
 
     public ScanHolder (App main_app) {
         app = main_app;
@@ -20,6 +21,8 @@ public class ScanHolder : FlowBox {
             ActionBar.instance.update_export_content (this.get_selected_children ().length ());
         });
 
+        instance = this;
+
     }
 
     // Generate test content
@@ -31,11 +34,13 @@ public class ScanHolder : FlowBox {
         // Also remember to propagate changes to variables
         // Then repopulate it
 
-        var item_count = 6;
+        var item_count = 2;
         for (int i = 0; i < item_count; i++) {
             var thumbnail = new Thumbnail ("/home/marinp1/Repositories/gtk-doxie-app/src/demo1.jpg");
-            this.insert (thumbnail, 0);
+            this.insert (thumbnail, -1);
         }
+
+        this.show_all ();
 
         return true;
 
