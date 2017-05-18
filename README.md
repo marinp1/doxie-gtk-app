@@ -3,14 +3,16 @@ Unofficial GTK application for fetching scans from Doxie WiFi scanners with an e
 
 ## Manual installation
 
-For manual installation some dependencies are required and [gssdp](https://wiki.gnome.org/Projects/GUPnP) must be built from the source.
+For manual installation some dependencies are required.
 
 #### Required dependencies
-- granite
-- gssdp
-- gtk+-3.0
+- cmake
+- valac
+- libgtk-3-dev
+- libgranite-dev
+- libgssdp-1.0-dev
+- libsoup2.4-dev
 - json-glib-1.0
-- libsoup-2.4
 
 #### Installation steps
 

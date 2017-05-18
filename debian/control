@@ -1,0 +1,19 @@
+Source: gtk-doxie-app
+Section: x11
+Priority: extra
+Maintainer: Patrik Marin <dev@patrikmarin.fi>
+Build-Depends: cmake (>= 2.8),
+               debhelper (>= 9),
+               valac (>= 0.26),
+               libgtk-3-dev,
+               libgranite-dev,
+               libgssdp-1.0-dev,
+               libsoup2.4-dev,
+               json-glib-1.0
+
+Standards-Version: 3.9.3
+Package: gtk-doxie-app
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: GTK Doxie Sync
+ Unofficial Doxie GTK App for fetching scans remotely.

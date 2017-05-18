@@ -28,29 +28,14 @@
       json-glib-1.0
       gtk+-3.0
       libsoup-2.4
+      gssdp-1.0
     )
-
-    message(-- " Checking for module gssdp-1.0")
-
-    #Then look for gssdp and include it
-    find_path(GSSDP_INCLUDE_PATH gssdp-1.0 /usr/include/ /usr/local/include/)
-    find_library(GSSDP_LIBRARIES gssdp-1.0)
-
-    if (GSSDP_INCLUDE_PATH-NOTFOUND)
-        message(FATAL_ERROR "gssdp include directory not found")
-    endif()
-
-    message(-- " Found gssdp-1.0: ${GSSDP_INCLUDE_PATH}")
-
-    message(-- " ${GSSDP_LIBRARIES}")
-
-    include_directories("${GSSDP_INCLUDE_PATH}/gssdp-1.0")
 
     add_definitions(${DEPS_CFLAGS})
     add_definitions (-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\")
 
     link_directories(${DEPS_LIBRARY_DIRS})
-    link_libraries(${DEPS_LIBRARIES} ${GSSDP_LIBRARIES})
+    link_libraries(${DEPS_LIBRARIES})
 
     add_subdirectory (po)
 
@@ -75,8 +60,7 @@
         granite
         json-glib-1.0
         libsoup-2.4
-    CUSTOM_VAPIS
-        vapi/gssdp-1.0.vapi
+        gssdp-1.0
     )
 
     # tell cmake what to call the executable we just made
