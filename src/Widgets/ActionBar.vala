@@ -35,7 +35,10 @@ public class ActionBar : Gtk.Box {
         export_button = new Gtk.Button.with_label (_("No scans selected"));
         export_button.set_sensitive (false);
         export_button.clicked.connect (() => {
-            // TODO: Start export process
+
+            // TODO: Start export
+            print (app.variables.selected_scanner.name + "\n");
+            
         });
 
         // Add export command to the right side

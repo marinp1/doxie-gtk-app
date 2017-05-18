@@ -78,30 +78,10 @@ public class App : Granite.Application {
             Soup.URI parsed_uri = new Soup.URI (full_uri);
             string ip_address = parsed_uri.get_host ();
 
-            // Generate new Doxie instance and add it to list
-            DoxieScanner scanner = new DoxieScanner (ip_address);
-            variables.scanner_list.set (ip_address, scanner);
-
-            if (variables.selected_scanner == null) {
-                select_doxie (scanner);
-            }
+            DoxieScannerUtils.add_scanner (ip_address);
 
         }
 
-    }
-
-    // Sets doxie selection and saves password for the future
-    public bool select_doxie (DoxieScanner scanner) {
-
-        if (scanner.password_protected) {
-            // TODO: check password validity
-            // TODO: prompt for password if invalid
-        }
-
-        variables.selected_scanner = scanner;
-        CustomHeader.instance.update_combobox ();
-
-        return true;
     }
 
     public static int main (string[] args) {

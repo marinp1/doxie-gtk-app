@@ -4,8 +4,8 @@ public class CustomHeader : Gtk.HeaderBar  {
 
     public static weak CustomHeader instance;
 
-    // ListStore to hold combobox values
     Gtk.ComboBoxText scanner_selector;
+    Gee.ArrayList<weak DoxieScanner> combobox_content = new Gee.ArrayList<weak DoxieScanner>();
 
     public CustomHeader (App main_app) {
         app = main_app;
@@ -38,11 +38,19 @@ public class CustomHeader : Gtk.HeaderBar  {
         // Set the combo box
 		scanner_selector = new Gtk.ComboBoxText();
         this.pack_start (scanner_selector);
-        update_combobox ();
+        check_sensitivity ();
 
 		scanner_selector.changed.connect (() => {
 
-            print ("change");
+            string active = scanner_selector.get_active_text ();
+
+            // Set active scanner
+            if (active != null && active != "No scanners found!") {
+                string selected_ip = DoxieScannerUtils.get_ip_from_selection (active);
+                app.variables.selected_scanner = app.variables.scanner_list.get (selected_ip);
+            }
+
+            // TODO: this should also fetch latest scans
 
 		});
 
@@ -50,29 +58,47 @@ public class CustomHeader : Gtk.HeaderBar  {
 
     }
 
-    public void update_combobox () {
+    // Add scanner to combobox
+    public void add_scanner (DoxieScanner? scanner) {
 
-        int n = 0;
-
-        scanner_selector.set_sensitive (true);
-        scanner_selector.remove_all ();
-
-        foreach (DoxieScanner scanner in app.variables.scanner_list.values) {
-
-            scanner_selector.append_text (scanner.name);
-
-            if (app.variables.selected_scanner.mac_address == scanner.mac_address) {
-                scanner_selector.active = n;
-            }
-
-            n += 1;
+        // If placeholder was in place, remove it
+        if (app.variables.scanner_list.size == 1) {
+            scanner_selector.remove_all ();
         }
 
-        if (n == 0) {
+        combobox_content.add (scanner);
+        scanner_selector.append_text (scanner.name + " (" + scanner.ip_address + ")");
+        check_sensitivity ();
+    }
+
+    // Remove scanner from combobox
+    public void remove_scanner (DoxieScanner? scanner) {
+        int index = combobox_content.index_of (scanner);
+        combobox_content.remove_at (index);
+        scanner_selector.remove (index);
+        check_sensitivity ();
+    }
+
+    // Check combobox selection and check if it should be clicable
+    private void check_sensitivity () {
+
+        if (app.variables.selected_scanner != null) {
+            int index = combobox_content.index_of(app.variables.selected_scanner);
+            scanner_selector.active = index;
+        }
+
+        if (app.variables.scanner_list.size < 2) {
             scanner_selector.set_sensitive (false);
-            scanner_selector.append_text ("No scanners found");
+        } else {
+            scanner_selector.set_sensitive (true);
+        }
+
+        // If no devices were found, add a placeholder
+        if (app.variables.scanner_list.size == 0) {
+            scanner_selector.append_text ("No scanners found!");
             scanner_selector.active = 0;
         }
-
+       
     }
+
 }
