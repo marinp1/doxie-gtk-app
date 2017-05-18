@@ -23,6 +23,7 @@
     # now let's actually check for the required dependencies
     pkg_check_modules(DEPS REQUIRED
       granite
+      json-glib-1.0
       gtk+-3.0
       libsoup-2.4
     )
@@ -66,6 +67,7 @@
     PACKAGES
         gtk+-3.0
         granite
+        json-glib-1.0
         libsoup-2.4
     CUSTOM_VAPIS
         vapi/gssdp-1.0.vapi

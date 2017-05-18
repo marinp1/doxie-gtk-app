@@ -6,28 +6,28 @@ public class DoxieScanner : GLib.Object {
   public string mac_address;
   public string device_password;
 
-  public DoxieScanner (string ip_address) {
+  public DoxieScanner (string ip) {
+
+      // Fetch scanner information
+      var hello_uri = "http://" + ip + ":8080/hello.json";
+      var session = new Soup.Session ();
+      var message = new Soup.Message ("GET", hello_uri);
+      session.send_message (message);
       
-      // Create HTTP hello request to scanner
-      // DEMO
       try {
-        // Create a session:
-        var session = new Soup.Session ();
 
-        // Request a file:
-        Soup.Request request = session.request ("http://" + ip_address + ":8080/hello.json");
-        InputStream stream = request.send ();
+          // Parse response
+          Json.Parser parser = new Json.Parser ();
+          parser.load_from_data ((string) message.response_body.flatten ().data, -1);
+          var scanner_information = parser.get_root ().get_object ();
 
-        // Print the content:
-        DataInputStream data_stream = new DataInputStream (stream);
+          ip_address = ip;
+          name = scanner_information.get_string_member ("name");
+          mac_address = scanner_information.get_string_member ("MAC");
+          password_protected = scanner_information.get_boolean_member ("hasPassword");
 
-        string? line;
-        while ((line = data_stream.read_line ()) != null) {
-          stdout.puts (line);
-          stdout.putc ('\n');
-        }
       } catch (Error e) {
-        stderr.printf ("Error: %s\n", e.message);
+          print ("Error with fetching scanner information at " + ip);
       }
 
   }
