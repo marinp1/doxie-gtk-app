@@ -21,7 +21,7 @@ public class App : Gtk.Application {
         window.set_border_width (12);
         window.set_position (Gtk.WindowPosition.CENTER);
         window.set_default_size (800, 800);
-        window.set_titlebar (new CustomHeader ());
+        window.set_titlebar (new CustomHeader (this));
 
         // Application main layout (scan listing and action bar)
         // TODO: better variable name
@@ -42,30 +42,16 @@ public class App : Gtk.Application {
         resource_browser.set_active (true);
 
         // Layout containing all scan previews
-        // TODO: change variable name
-        // TODO: selection handles weirdly
-        FlowBox layout = new FlowBox ();
-        layout.set_valign (Align.START);
-        layout.set_halign (Align.START);
-        layout.activate_on_single_click = false;
-        layout.column_spacing = 0;
-        layout.row_spacing = 0;
-        layout.set_selection_mode (SelectionMode.MULTIPLE);
-        layout.homogeneous = true;
-
-        // Generate test content
-        // TODO: replace with content fetching from scanner with
-        // HTTP get request
-        var item_count = 6;
-        for (int i = 0; i < item_count; i++) {
-            var thumbnail = new Thumbnail ("/home/marinp1/Repositories/gtk-doxie-app/src/demo1.jpg");
-            layout.insert (thumbnail, 0);
-        }
+        ScanHolder scan_holder = new ScanHolder (this);
+        // FIXME: This should be called when refresh button is pressed
+        // or selected scanner is changed
+        // for demo purposes keep it here
+        scan_holder.refresh_content();
 
         // Add scan list to a vertically scrolling window
         ScrolledWindow scrolled = new ScrolledWindow (null, null);
         scrolled.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
-        scrolled.add (layout);
+        scrolled.add (scan_holder);
 
         // Add all content to main layout
         pane.pack_start (scrolled, true, true, 0);

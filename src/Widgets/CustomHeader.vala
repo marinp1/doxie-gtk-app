@@ -1,5 +1,9 @@
 public class CustomHeader : Gtk.HeaderBar  {
-    public CustomHeader () {
+
+    App app;
+
+    public CustomHeader (App main_app) {
+        app = main_app;
         
         this.set_title (_("Doxie Go WiFi Sync"));
         this.set_show_close_button (true);

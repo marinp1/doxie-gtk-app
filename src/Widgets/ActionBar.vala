@@ -2,6 +2,8 @@ using Gtk;
 
 public class ActionBar : Gtk.Box {
 
+    public static weak ActionBar instance;
+
     Gtk.Button export_button;
     App app;
 
@@ -31,6 +33,7 @@ public class ActionBar : Gtk.Box {
 
         // Button for exporting scans
         export_button = new Gtk.Button.with_label (_("No scans selected"));
+        export_button.set_sensitive (false);
         export_button.clicked.connect (() => {
             // TODO: Start export process
         });
@@ -38,5 +41,21 @@ public class ActionBar : Gtk.Box {
         // Add export command to the right side
         this.pack_end (export_button, false, false, 0);
 
+        instance = this;
+
     }
+
+    public void update_export_content (uint selection_count) {
+        if (selection_count == 0) {
+            export_button.label = _("No scans selected");
+            export_button.set_sensitive (false);
+        } else if (selection_count == 1) {
+            export_button.label = _("Export 1 scan");
+            export_button.set_sensitive (true);
+        } else {
+            export_button.label = _("Export " + selection_count.to_string() + " scans");
+            export_button.set_sensitive (true);
+        }
+    }
+
 }

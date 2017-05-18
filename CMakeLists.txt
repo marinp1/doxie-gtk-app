@@ -53,6 +53,7 @@
         src/Objects/Thumbnail.vala
         src/Widgets/ActionBar.vala
         src/Widgets/CustomHeader.vala
+        src/Widgets/ScanHolder.vala
 
     # tell what libraries to use when compiling
     PACKAGES
