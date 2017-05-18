@@ -32,7 +32,7 @@ public class ActionBar : Gtk.Box {
         // Button for exporting scans
         export_button = new Gtk.Button.with_label ("No scans selected");
         export_button.clicked.connect (() => {
-            // Start export process
+            // TODO: Start export process
         });
 
         // Add export command to the right side
