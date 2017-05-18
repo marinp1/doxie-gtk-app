@@ -12,7 +12,7 @@ For manual installation some dependencies are required.
 - libgranite-dev
 - libgssdp-1.0-dev
 - libsoup2.4-dev
-- json-glib-1.0
+- libjson-glib-dev
 
 #### Installation steps
 
