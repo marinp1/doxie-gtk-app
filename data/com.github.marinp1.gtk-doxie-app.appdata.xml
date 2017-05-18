@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Patrik Marin <dev@patrikmarin.fi> -->
+<component type="desktop">
+  <id>com.github.marinp1.gtk-doxie-app.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <name>GTK Doxie Sync</name>
+  <summary>Unofficial Doxie WiFi scanner sync tool</summary>
+  <description>
+    <p>GTK wrapper for Doxie's rest API with easy-to-use UI that allows users to download scans remotely from scanner. Also supports pre-processing and stapling scans together.</p>
+  </description>
+</component>

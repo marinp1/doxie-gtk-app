@@ -1,8 +1,0 @@
-0. Doxie configuration (separate network / connected network)
-1. Scan wifi for scanner
-2. Connect to scanner
-3. List scans in a grid as thumbnails and names, allow preview
-4. Select scans
-5. Options for stiching scans together / ocr
-6. Export scans and mark them in the grid
-7. Allow deletion for exported scans

@@ -1,0 +1,11 @@
+Desktop Entry]
+Name=GTK Doxie Sync
+GenericName=GTK Doxie Sync Application
+Comment=GTK implementation for Doxie WiFi scanners for downloading scans.
+Categories=GTK;Utility;
+Exec=com.github.marinp1.gtk-doxie-app
+Icon=application-default-icon
+Terminal=false
+Type=Application
+X-GNOME-Gettext-Domain=gtk-doxie-app
+Keywords=Doxie;WiFi;Sync;
