@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-18 16:10+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Objects/Thumbnail.vala:23
+msgid "Image "
+msgstr ""
+
+#: ../src/Objects/DoxieScanner.vala:30
+msgid "Error with fetching scanner information at "
+msgstr ""
+
+#: ../src/Widgets/ActionBar.vala:33
+msgid "No scans selected"
+msgstr ""
+
+#: ../src/Widgets/CustomHeader.vala:4
+msgid "Doxie Go WiFi Sync"
+msgstr ""
+
+#: ../src/Widgets/CustomHeader.vala:18
+msgid "OCR settings"
+msgstr ""
+
+#: ../src/Application.vala:35
+msgid "Couldn't create SSDP client. \n"
+msgstr ""

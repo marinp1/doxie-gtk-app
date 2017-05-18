@@ -20,7 +20,7 @@ public class Thumbnail : Gtk.Box {
           // TODO: Set label to be file name
           thumbnail_label = new Label ("somepath");
         } catch (GLib.Error ex) {
-          print ("Image " + img_path + " not found!\n");
+          print (_("Image " + img_path + " not found!\n"));
         }
 
         this.pack_start (thumbnail_image, false, false, 0);

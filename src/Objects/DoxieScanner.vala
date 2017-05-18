@@ -27,7 +27,7 @@ public class DoxieScanner : GLib.Object {
           password_protected = scanner_information.get_boolean_member ("hasPassword");
 
       } catch (Error e) {
-          print ("Error with fetching scanner information at " + ip);
+          print (_("Error with fetching scanner information at " + ip));
       }
 
   }

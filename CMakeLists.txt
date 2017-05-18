@@ -17,6 +17,8 @@
     set (VERSION "0.1")
     set (VERSION_INFO "UI demo")
 
+    set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}")
+
     # we're about to use pkgconfig to make sure dependencies are installed so let's find pkgconfig first
     find_package(PkgConfig)
 
@@ -45,8 +47,12 @@
     include_directories("${GSSDP_INCLUDE_PATH}/gssdp-1.0")
 
     add_definitions(${DEPS_CFLAGS})
+    add_definitions (-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\")
+
     link_directories(${DEPS_LIBRARY_DIRS})
     link_libraries(${DEPS_LIBRARIES} ${GSSDP_LIBRARIES})
+
+    add_subdirectory (po)
 
     # make sure we have vala
     find_package(Vala REQUIRED)

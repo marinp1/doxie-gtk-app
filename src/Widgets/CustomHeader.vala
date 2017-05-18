@@ -1,7 +1,7 @@
 public class CustomHeader : Gtk.HeaderBar  {
     public CustomHeader () {
         
-        this.set_title ("Doxie Go WiFi Sync");
+        this.set_title (_("Doxie Go WiFi Sync"));
         this.set_show_close_button (true);
         this.spacing = 0;
 
@@ -15,7 +15,7 @@ public class CustomHeader : Gtk.HeaderBar  {
         Gtk.Menu app_menu_content = new Gtk.Menu ();
 
         // Add menu items
-        Gtk.MenuItem ocr_settings = new Gtk.MenuItem.with_label ("OCR settings");
+        Gtk.MenuItem ocr_settings = new Gtk.MenuItem.with_label (_("OCR settings"));
         app_menu_content.add (ocr_settings);
 
         // Generate new Granite application menu with content

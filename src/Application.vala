@@ -32,7 +32,7 @@ public class App : Gtk.Application {
             GLib.MainContext ctx = GLib.MainContext.get_thread_default ();
             client = new GSSDP.Client (ctx, null);
         } catch (GLib.Error e) {
-            print ("Couldn't create SSDP client. \n");
+            print (_("Couldn't create SSDP client. \n"));
             print (e.message);
         }
 
