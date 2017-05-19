@@ -10,7 +10,7 @@ public class Thumbnail : Gtk.Box {
     public Thumbnail (string img_path) {
 
         this.set_orientation (Orientation.VERTICAL);
-        this.set_border_width (12);
+        this.set_border_width (10);
         this.set_spacing (6);
 
         Pixbuf pixel_buffer;

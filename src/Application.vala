@@ -49,7 +49,7 @@ public class App : Granite.Application {
         // FIXME: This should be called when refresh button is pressed
         // or selected scanner is changed
         // for demo purposes keep it here
-        scan_holder.refresh_content();
+        //scan_holder.refresh_content();
 
         // Add scan list to a vertically scrolling window
         ScrolledWindow scrolled = new ScrolledWindow (null, null);

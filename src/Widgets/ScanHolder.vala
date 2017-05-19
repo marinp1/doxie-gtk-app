@@ -2,6 +2,18 @@ using Gtk;
 
 public class ScanHolder : FlowBox {
 
+    private const string scanholder_style = """
+
+        .scan:focus {
+            background-color: transparent;
+        }
+
+        .scan:selected {
+            background-color: alpha(#3399ff, 0.4);
+        }
+
+    """;
+
     App app;
     public static weak ScanHolder instance;
 
@@ -11,17 +23,17 @@ public class ScanHolder : FlowBox {
         this.set_valign (Align.START);
         this.set_halign (Align.START);
         this.activate_on_single_click = false;
-        this.column_spacing = 0;
-        this.row_spacing = 0;
+        this.column_spacing = 6;
+        this.row_spacing = 6;
         this.set_selection_mode (SelectionMode.MULTIPLE);
         this.homogeneous = true;
+
+        instance = this;
 
         this.selected_children_changed.connect (() => {
             app.variables.reset_selected_items (this.get_selected_children ());
             ActionBar.instance.update_export_content (this.get_selected_children ().length ());
         });
-
-        instance = this;
 
     }
 
@@ -39,6 +51,17 @@ public class ScanHolder : FlowBox {
             var thumbnail = new Thumbnail ("/home/marinp1/Repositories/gtk-doxie-app/src/demo1.jpg");
             this.insert (thumbnail, -1);
         }
+
+        int child_count = 0;
+
+        this.foreach((child) => {
+            child.get_style_context ().add_class ("scan");
+            Granite.Widgets.Utils.set_theming (child, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
+            child_count += 1;
+        });
+
+        // Unselect all children
+        this.unselect_all ();
 
         this.show_all ();
 
