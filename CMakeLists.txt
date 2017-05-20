@@ -50,7 +50,6 @@
         src/Application.vala
         src/Variables.vala
         src/Objects/DoxieScanner.vala
-        src/Objects/Thumbnail.vala
         src/Utils/DoxieUtils.vala
         src/Utils/GssdpUtils.vala
         src/Utils/HttpUtils.vala
@@ -59,6 +58,7 @@
         src/Widgets/ContentStack.vala
         src/Widgets/CustomHeader.vala
         src/Widgets/ScanHolder.vala
+        src/Widgets/Thumbnail.vala
 
     # tell what libraries to use when compiling
     PACKAGES
