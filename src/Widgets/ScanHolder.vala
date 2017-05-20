@@ -20,7 +20,6 @@ public class ScanHolder : FlowBox {
 
     """;
 
-    App app;
     public static weak ScanHolder instance;
 
     private Gee.ArrayList<string> scan_list;
@@ -29,8 +28,7 @@ public class ScanHolder : FlowBox {
         return scan_list.size;
     }
 
-    public ScanHolder (App main_app) {
-        app = main_app;
+    public ScanHolder () {
 
         this.set_valign (Align.START);
         this.set_halign (Align.START);
@@ -49,7 +47,7 @@ public class ScanHolder : FlowBox {
         instance = this;
 
         this.selected_children_changed.connect (() => {
-            app.variables.reset_selected_items (this.get_selected_children ());
+            Variables.instance.reset_selected_items (this.get_selected_children ());
             ActionBar.instance.update_export_content (this.get_selected_children ().length ());
         });
 
@@ -95,9 +93,9 @@ public class ScanHolder : FlowBox {
         };
 
         if (scan_list.size == 0) {
-            app.switch_content (App.CONTENT_TYPE.NO_SCANS);
+            App.instance.switch_content (App.CONTENT_TYPE.NO_SCANS);
         } else {
-            app.switch_content (App.CONTENT_TYPE.SCAN_LIST);
+            App.instance.switch_content (App.CONTENT_TYPE.SCAN_LIST);
         }
 
         // Unselect all children

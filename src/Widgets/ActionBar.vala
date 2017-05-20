@@ -5,10 +5,8 @@ public class ActionBar : Gtk.Box {
     public static weak ActionBar instance;
 
     Gtk.Button export_button;
-    App app;
 
-    public ActionBar (App main_app) {
-        app = main_app;
+    public ActionBar () {
 
         this.set_orientation (Orientation.HORIZONTAL);
         this.set_spacing (10);
@@ -22,11 +20,11 @@ public class ActionBar : Gtk.Box {
         Gtk.Switch ocr_switch = new Gtk.Switch ();
 
         // By default, OCR is the same as given in application variables
-        ocr_switch.set_active (app.variables.ocr_activated);
+        ocr_switch.set_active (Variables.instance.ocr_activated);
 
         // Connect switch activation to application shared variable
         ocr_switch.notify["active"].connect (() => {
-            app.variables.ocr_activated = ocr_switch.active;
+            Variables.instance.ocr_activated = ocr_switch.active;
         });
         
         // Add OCR switch to left side of action bar
@@ -39,7 +37,7 @@ public class ActionBar : Gtk.Box {
         export_button.clicked.connect (() => {
 
             // TODO: Start export
-            print (app.variables.selected_scanner.name + "\n");
+            print (Variables.instance.selected_scanner.name + "\n");
             
         });
 

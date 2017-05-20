@@ -2,6 +2,8 @@ using Gtk;
 
 public class App : Granite.Application {
 
+    public static weak App instance;
+
     // Initiate application variables
     public Variables variables = new Variables ();
 
@@ -93,7 +95,7 @@ public class App : Granite.Application {
         ContentPlaceholder.change_to_no_connection_template ();
 
         // Layout containing all scan previews
-        ScanHolder scan_holder = new ScanHolder (this);
+        ScanHolder scan_holder = new ScanHolder ();
 
         // Add scan list to a vertically scrolling window
         ScrolledWindow scrolled = new ScrolledWindow (null, null);
@@ -110,14 +112,16 @@ public class App : Granite.Application {
         // Add all content to main layout
         pane.pack_start (content_stack, true, true, 0);
         pane.pack_start (separator, false, false, 0);
-        pane.pack_start (new ActionBar (this), false, false, 0);
+        pane.pack_start (new ActionBar (), false, false, 0);
 
-        CustomHeader title_bar = new CustomHeader (this); 
+        CustomHeader title_bar = new CustomHeader (); 
         main_window.set_titlebar (title_bar);
 
         // Add main layout to window and display it
         main_window.add (pane);
         main_window.show_all ();
+
+        instance = this;
 
         init ();
 
@@ -138,7 +142,7 @@ public class App : Granite.Application {
             Soup.URI parsed_uri = new Soup.URI (full_uri);
             string ip_address = parsed_uri.get_host ();
 
-            DoxieScannerUtils.add_scanner (ip_address);
+            DoxieUtils.add_scanner (ip_address);
 
         }
 

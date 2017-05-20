@@ -1,4 +1,4 @@
-namespace HttpUtil {
+namespace HttpUtils {
 
     
     private enum REQUEST_TYPE {
@@ -107,13 +107,31 @@ namespace HttpUtil {
     }
 
     public static bool get_scan_thumbnails () {
+
+        // empty tmp folder
         // make get request for scan thumbnails
         // save thumbnails to a tmp folder
-        // call Scanholder.refresh_scans
 
         //string scans_uri = "http://" + scanner.ip_address + ":8080/scans.json";
 
-        ScanHolder.instance.refresh_thumbnails ();
+        /* example response
+
+        [
+            {
+            "name":"/DOXIE/JPEG/IMG_0001.JPG",
+            "size":241220,
+            "modified":"2010-05-01 00:10:06"
+            },
+            {
+            "name":"/DOXIE/JPEG/IMG_0002.JPG",
+            "size":265085,
+            "modified":"2010-05-01 00:09:26"
+            }
+        ] 
+
+        */
+
+        //string thumbnail_uri = "http://" + scanner.ip_address + ":8080/thumbnails" + thumbnail.name;
 
         return true;
     }
