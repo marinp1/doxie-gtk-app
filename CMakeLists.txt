@@ -51,6 +51,7 @@
         src/Variables.vala
         src/Objects/DoxieScanner.vala
         src/Objects/Thumbnail.vala
+        src/Utils/HttpUtils.vala
         src/Widgets/ActionBar.vala
         src/Widgets/CustomHeader.vala
         src/Widgets/ScanHolder.vala
