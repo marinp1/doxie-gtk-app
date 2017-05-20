@@ -1,6 +1,6 @@
 class ContentStack : Gtk.Stack {
 
-    public static weak ContentStack instance;
+    private static weak ContentStack instance;
 
     public ContentStack () {
         instance = this;

@@ -78,7 +78,7 @@ public class App : Granite.Application {
     }
 
     private void init () {
-        CustomHeader.instance.check_sensitivity ();
+        CustomHeader.check_sensitivity ();
         GssdpUtils.initialise ();
     }
 

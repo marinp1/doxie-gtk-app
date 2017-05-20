@@ -1,6 +1,6 @@
 class CustomHeader : Gtk.HeaderBar  {
 
-    public static weak CustomHeader instance;
+    private static weak CustomHeader instance;
 
     Gee.ArrayList<weak DoxieScanner> combobox_content = new Gee.ArrayList<weak DoxieScanner>();
 
@@ -61,7 +61,7 @@ class CustomHeader : Gtk.HeaderBar  {
 
         button_fetch_scans.clicked.connect (() => {
             HttpUtils.get_scan_thumbnails ();
-            ScanHolder.instance.refresh_thumbnails ();
+            ScanHolder.refresh_thumbnails ();
         });
 
 		scanner_selector.changed.connect (() => {
@@ -86,40 +86,40 @@ class CustomHeader : Gtk.HeaderBar  {
     }
 
     // Add scanner to combobox
-    public void add_scanner (DoxieScanner? scanner) {
-        combobox_content.add (scanner);
-        scanner_selector.append_text (scanner.name + " (" + scanner.ip_address + ")");
+    public static void add_scanner (DoxieScanner? scanner) {
+        instance.combobox_content.add (scanner);
+        instance.scanner_selector.append_text (scanner.name + " (" + scanner.ip_address + ")");
         check_sensitivity ();
     }
 
     // Remove scanner from combobox
-    public void remove_scanner (DoxieScanner? scanner) {
-        int index = combobox_content.index_of (scanner);
-        combobox_content.remove_at (index);
-        scanner_selector.remove (index);
+    public static void remove_scanner (DoxieScanner? scanner) {
+        int index = instance.combobox_content.index_of (scanner);
+        instance.combobox_content.remove_at (index);
+        instance.scanner_selector.remove (index);
         check_sensitivity ();
     }
 
     // Check combobox selection and check if it should be clickable
-    public void check_sensitivity () {
+    public static void check_sensitivity () {
 
         if (Variables.instance.selected_scanner != null) {
-            int index = combobox_content.index_of(Variables.instance.selected_scanner);
-            scanner_selector.active = index;
+            int index = instance.combobox_content.index_of(Variables.instance.selected_scanner);
+            instance.scanner_selector.active = index;
         }
 
         // If no devices were found, add a placeholder
         if (Variables.instance.scanner_list.size == 0) {
-            button_fetch_scans.set_sensitive (false);
+            instance.button_fetch_scans.set_sensitive (false);
             ContentStack.switch_content (ContentStack.CONTENT_TYPE.NO_CONNECTION);
-            scanner_selector.hide ();
+            instance.scanner_selector.hide ();
         } else if (Variables.instance.scanner_list.size == 1) {
-            button_fetch_scans.set_sensitive (true);
-            scanner_selector.set_sensitive (false);
-            scanner_selector.show ();
+            instance.button_fetch_scans.set_sensitive (true);
+            instance.scanner_selector.set_sensitive (false);
+            instance.scanner_selector.show ();
         } else {
-            button_fetch_scans.set_sensitive (true);
-            scanner_selector.show ();
+            instance.button_fetch_scans.set_sensitive (true);
+            instance.scanner_selector.show ();
         }
        
     }

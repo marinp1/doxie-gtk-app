@@ -20,7 +20,7 @@ class ScanHolder : FlowBox {
 
     """;
 
-    public static weak ScanHolder instance;
+    private static weak ScanHolder instance;
 
     Gee.ArrayList<string> scan_list;
 
@@ -44,7 +44,7 @@ class ScanHolder : FlowBox {
 
         this.selected_children_changed.connect (() => {
             Variables.instance.reset_selected_items (this.get_selected_children ());
-            ActionBar.instance.update_export_content (this.get_selected_children ().length ());
+            ActionBar.update_export_content (this.get_selected_children ().length ());
         });
 
     }
@@ -52,9 +52,9 @@ class ScanHolder : FlowBox {
     // Generate test content
     // TODO: replace with content fetching from scanner with
     // HTTP get request
-    public bool refresh_thumbnails () {
+    public static bool refresh_thumbnails () {
 
-        scan_list.clear ();
+        instance.scan_list.clear ();
 
         // Get thumbnail paths from directory
         string thumbnail_location = GLib.Environment.get_tmp_dir () + "/" + Variables.TMP_FOLDER_NAME + "/thumbnails";
@@ -67,7 +67,7 @@ class ScanHolder : FlowBox {
             while ((thumbnail_name = thumbnail_directory.read_name ()) != null) {
 
                 string thumbnail_path = Path.build_filename (thumbnail_location, thumbnail_name);
-                scan_list.add (thumbnail_path);
+                instance.scan_list.add (thumbnail_path);
 
             }
 
@@ -76,29 +76,29 @@ class ScanHolder : FlowBox {
         }
 
         // Remove old elements
-        foreach (Gtk.Widget child in this.get_children ()) {
+        foreach (Gtk.Widget child in instance.get_children ()) {
             child.destroy ();
         };
 
         // Create new element from thumbnail file path
-        foreach (string scan_path in scan_list) {
+        foreach (string scan_path in instance.scan_list) {
             var thumbnail = new Thumbnail (scan_path);
-            this.insert (thumbnail, -1);
+            instance.insert (thumbnail, -1);
             // Apply custom styling to FlowBoxChild
             thumbnail.parent.get_style_context ().add_class ("scan");
             Granite.Widgets.Utils.set_theming (thumbnail.parent, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
         };
 
         // If no scans were found, display placeholder
-        if (scan_list.size == 0) {
+        if (instance.scan_list.size == 0) {
             ContentStack.switch_content (ContentStack.CONTENT_TYPE.NO_SCANS);
         } else {
             ContentStack.switch_content (ContentStack.CONTENT_TYPE.SCAN_LIST);
         }
 
         // Unselect all children
-        this.unselect_all ();
-        this.show_all ();
+        instance.unselect_all ();
+        instance.show_all ();
 
         return true;
 

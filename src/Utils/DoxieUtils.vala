@@ -13,7 +13,7 @@ namespace DoxieUtils {
         }
 
         // Add device for selection
-        CustomHeader.instance.add_scanner (scanner);
+        CustomHeader.add_scanner (scanner);
 
     }
 

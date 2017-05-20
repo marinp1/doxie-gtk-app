@@ -2,7 +2,7 @@ using Gtk;
 
 class ActionBar : Gtk.Box {
 
-    public static weak ActionBar instance;
+    private static weak ActionBar instance;
 
     Gtk.Button button_export;
     Gtk.Switch switch_ocr;
@@ -32,6 +32,8 @@ class ActionBar : Gtk.Box {
         // Add export command to the right side
         this.pack_end (button_export, false, false, 0);
 
+        connect_signals ();
+
         instance = this;
 
     }
@@ -50,16 +52,16 @@ class ActionBar : Gtk.Box {
 
     }
 
-    public void update_export_content (uint selection_count) {
+    public static void update_export_content (uint selection_count) {
         if (selection_count == 0) {
-            button_export.label = _("No scans selected");
-            button_export.set_sensitive (false);
+            instance.button_export.label = _("No scans selected");
+            instance.button_export.set_sensitive (false);
         } else if (selection_count == 1) {
-            button_export.label = _("Export 1 scan");
-            button_export.set_sensitive (true);
+            instance.button_export.label = _("Export 1 scan");
+            instance.button_export.set_sensitive (true);
         } else {
-            button_export.label = _("Export " + selection_count.to_string() + " scans");
-            button_export.set_sensitive (true);
+            instance.button_export.label = _("Export " + selection_count.to_string() + " scans");
+            instance.button_export.set_sensitive (true);
         }
     }
 
