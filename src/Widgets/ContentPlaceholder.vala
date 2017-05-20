@@ -21,9 +21,9 @@ class ContentPlaceholder : Granite.Widgets.AlertView {
 
     public static void change_to_no_connection_template () {
 
-        instance.title = "Scanner not connected";
+        instance.title = "Scanner not found";
         instance.description = "Please make sure Doxie is connected to same network.";
-        instance.icon_name = "network-error";
+        instance.icon_name = "printer-error";
         instance.show_all ();
 
     }
