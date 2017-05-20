@@ -112,16 +112,23 @@ public class App : Granite.Application {
         pane.pack_start (separator, false, false, 0);
         pane.pack_start (new ActionBar (this), false, false, 0);
 
-        main_window.set_titlebar (new CustomHeader (this));
+        CustomHeader title_bar = new CustomHeader (this); 
+        main_window.set_titlebar (title_bar);
 
         // Add main layout to window and display it
         main_window.add (pane);
         main_window.show_all ();
 
+        init ();
+
+    }
+
+    private void init () {
+        CustomHeader.instance.check_sensitivity ();
     }
 
     // On new SSDP device discovery
-    public void device_found (string usn, GLib.List<string> locations) {
+    private void device_found (string usn, GLib.List<string> locations) {
 
         // Check if device mathes Doxie's URN scheme
         if (usn.index_of ("urn:schemas-getdoxie-com:device:Scanner") != -1) {

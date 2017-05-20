@@ -58,7 +58,7 @@ public class ScanHolder : FlowBox {
     // Generate test content
     // TODO: replace with content fetching from scanner with
     // HTTP get request
-    public bool refresh_content () {
+    public bool refresh_thumbnails () {
 
         scan_list.clear ();
 

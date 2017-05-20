@@ -4,7 +4,7 @@ public class CustomHeader : Gtk.HeaderBar  {
 
     public static weak CustomHeader instance;
 
-    Gtk.ComboBoxText scanner_selector;
+    public Gtk.ComboBoxText scanner_selector;
     Gee.ArrayList<weak DoxieScanner> combobox_content = new Gee.ArrayList<weak DoxieScanner>();
     Gtk.ToolButton fetch_scans_btn;
 
@@ -46,15 +46,15 @@ public class CustomHeader : Gtk.HeaderBar  {
         fetch_scans_btn = new Gtk.ToolButton (refresh_icon, null);
         
         fetch_scans_btn.clicked.connect (() => {
-            ScanHolder.instance.refresh_content ();
+            HttpUtil.get_scan_thumbnails ();
         });
 
         this.pack_end (fetch_scans_btn);
 
         // Set the combo box
 		scanner_selector = new Gtk.ComboBoxText();
+
         this.pack_start (scanner_selector);
-        check_sensitivity ();
 
 		scanner_selector.changed.connect (() => {
 
@@ -89,25 +89,27 @@ public class CustomHeader : Gtk.HeaderBar  {
         check_sensitivity ();
     }
 
-    // Check combobox selection and check if it should be clicable
-    private void check_sensitivity () {
+    // Check combobox selection and check if it should be clickable
+    public void check_sensitivity () {
 
         if (app.variables.selected_scanner != null) {
             int index = combobox_content.index_of(app.variables.selected_scanner);
             scanner_selector.active = index;
         }
 
-        if (app.variables.scanner_list.size < 2) {
-            scanner_selector.set_sensitive (false);
-            fetch_scans_btn.set_sensitive (false);
-        } else {
-            scanner_selector.set_sensitive (true);
-            fetch_scans_btn.set_sensitive (true);
-        }
-
         // If no devices were found, add a placeholder
         if (app.variables.scanner_list.size == 0) {
+            fetch_scans_btn.set_sensitive (false);
             app.switch_content (App.CONTENT_TYPE.NO_CONNECTION);
+            scanner_selector.hide ();
+        } else if (app.variables.scanner_list.size == 1) {
+            app.switch_content (App.CONTENT_TYPE.NO_SCANS);
+            fetch_scans_btn.set_sensitive (true);
+            scanner_selector.set_sensitive (false);
+            scanner_selector.show ();
+        } else {
+            fetch_scans_btn.set_sensitive (true);
+            scanner_selector.show ();
         }
        
     }

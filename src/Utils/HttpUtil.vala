@@ -113,6 +113,7 @@ namespace HttpUtil {
 
         //string scans_uri = "http://" + scanner.ip_address + ":8080/scans.json";
 
+        ScanHolder.instance.refresh_thumbnails ();
 
         return true;
     }
