@@ -56,8 +56,25 @@ public class ScanHolder : FlowBox {
 
         scan_list.clear ();
 
-        // TODO: Change to reading from tmp folder
-        scan_list.add ("/home/marinp1/Repositories/gtk-doxie-app/src/demo1.jpg");
+        string thumbnail_location = GLib.Environment.get_tmp_dir () + "/.com.github.marinp1/gtk-doxie-app/thumbnails";
+
+        try {
+
+            Dir thumbnail_directory = Dir.open (thumbnail_location, 0);
+            string? thumbnail_name = null;
+
+            while ((thumbnail_name = thumbnail_directory.read_name ()) != null) {
+
+                string thumbnail_path = Path.build_filename (thumbnail_location, thumbnail_name);
+                scan_list.add (thumbnail_path);
+                
+            }
+
+        } catch (FileError e) {
+            
+            print (e.message);
+        
+        }
 
         this.foreach((child) => {
             child.destroy ();
