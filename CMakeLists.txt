@@ -53,6 +53,7 @@
         src/Objects/Thumbnail.vala
         src/Utils/HttpUtil.vala
         src/Widgets/ActionBar.vala
+        src/Widgets/ContentPlaceholder.vala
         src/Widgets/CustomHeader.vala
         src/Widgets/ScanHolder.vala
 

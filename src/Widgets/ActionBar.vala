@@ -11,8 +11,11 @@ public class ActionBar : Gtk.Box {
         app = main_app;
 
         this.set_orientation (Orientation.HORIZONTAL);
-        this.set_border_width (4);
         this.set_spacing (10);
+
+        this.margin_bottom = 12;
+        this.margin_right = 12;
+        this.margin_left = 12;
 
         Gtk.Label ocr_label = new Gtk.Label ("<b>OCR</b>");
         ocr_label.set_use_markup (true);

@@ -60,12 +60,6 @@ public class CustomHeader : Gtk.HeaderBar  {
 
     // Add scanner to combobox
     public void add_scanner (DoxieScanner? scanner) {
-
-        // If placeholder was in place, remove it
-        if (app.variables.scanner_list.size == 1) {
-            scanner_selector.remove_all ();
-        }
-
         combobox_content.add (scanner);
         scanner_selector.append_text (scanner.name + " (" + scanner.ip_address + ")");
         check_sensitivity ();
@@ -95,8 +89,7 @@ public class CustomHeader : Gtk.HeaderBar  {
 
         // If no devices were found, add a placeholder
         if (app.variables.scanner_list.size == 0) {
-            scanner_selector.append_text ("No scanners found!");
-            scanner_selector.active = 0;
+            app.switch_content (App.CONTENT_TYPE.NO_CONNECTION);
         }
        
     }

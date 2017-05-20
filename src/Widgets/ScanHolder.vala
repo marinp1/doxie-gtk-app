@@ -28,6 +28,10 @@ public class ScanHolder : FlowBox {
         this.set_selection_mode (SelectionMode.MULTIPLE);
         this.homogeneous = true;
 
+        this.margin_top = 12;
+        this.margin_right = 12;
+        this.margin_left = 12;
+
         instance = this;
 
         this.selected_children_changed.connect (() => {
@@ -59,6 +63,12 @@ public class ScanHolder : FlowBox {
             Granite.Widgets.Utils.set_theming (child, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
             child_count += 1;
         });
+
+        if (child_count == 0) {
+            app.switch_content (App.CONTENT_TYPE.NO_SCANS);
+        } else {
+            app.switch_content (App.CONTENT_TYPE.SCAN_LIST);
+        }
 
         // Unselect all children
         this.unselect_all ();
