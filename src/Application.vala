@@ -7,42 +7,6 @@ public class App : Granite.Application {
     // Initiate application variables
     public Variables variables = new Variables ();
 
-    // Initiate SSDP variables
-    GSSDP.ResourceBrowser resource_browser;
-    GSSDP.Client client;
-
-    public enum CONTENT_TYPE {
-        SCAN_LIST,
-        NO_SCANS,
-        NO_CONNECTION
-    }
-
-    private Gtk.Stack content_stack;
-
-    public void switch_content (CONTENT_TYPE content_request) {
-
-        if (content_stack.get_visible_child () == null) {
-            return;
-        }
-
-        if (content_request == CONTENT_TYPE.SCAN_LIST) {
-
-            content_stack.visible_child_name = "content";
-
-        } else if (content_request == CONTENT_TYPE.NO_SCANS) {
-
-            ContentPlaceholder.change_to_no_scans_template ();
-            content_stack.visible_child_name = "placeholder";
-
-        } else if (content_request == CONTENT_TYPE.NO_CONNECTION) {
-
-            ContentPlaceholder.change_to_no_connection_template ();
-            content_stack.visible_child_name = "placeholder";
-
-        }
-
-    }
-
     public Gtk.ApplicationWindow main_window;
 
     private const string stylesheet = """
@@ -71,22 +35,8 @@ public class App : Granite.Application {
         // TODO: better variable name
         Box pane = new Box (Orientation.VERTICAL, 0);
 
-        // Try to create a new SSDP client for device discovery
-        try {
-            GLib.MainContext ctx = GLib.MainContext.get_thread_default ();
-            client = new GSSDP.Client (ctx, null);
-        } catch (GLib.Error e) {
-            print (_("Couldn't create SSDP client. \n"));
-            print (e.message);
-        }
-
-        // Start listening to SSDP resources
-        resource_browser = new GSSDP.ResourceBrowser (client, GSSDP.ALL_RESOURCES);
-        resource_browser.resource_available.connect (device_found);
-        resource_browser.set_active (true);
-
         // Content stack
-        content_stack = new Gtk.Stack ();
+        ContentStack content_stack = new ContentStack ();
         content_stack.get_style_context ().add_class ("content_stack");
         Granite.Widgets.Utils.set_theming (content_stack, stylesheet, "content_stack", Gtk.STYLE_PROVIDER_PRIORITY_USER);
 
@@ -129,23 +79,7 @@ public class App : Granite.Application {
 
     private void init () {
         CustomHeader.instance.check_sensitivity ();
-    }
-
-    // On new SSDP device discovery
-    private void device_found (string usn, GLib.List<string> locations) {
-
-        // Check if device mathes Doxie's URN scheme
-        if (usn.index_of ("urn:schemas-getdoxie-com:device:Scanner") != -1) {
-
-            // Parse host from full URL
-            string full_uri = locations.nth (0).data;
-            Soup.URI parsed_uri = new Soup.URI (full_uri);
-            string ip_address = parsed_uri.get_host ();
-
-            DoxieUtils.add_scanner (ip_address);
-
-        }
-
+        GssdpUtils.initialise ();
     }
 
     public static int main (string[] args) {

@@ -1,6 +1,6 @@
 using Gtk;
 
-public class ScanHolder : FlowBox {
+class ScanHolder : FlowBox {
 
     private const string scanholder_style = """
 
@@ -91,9 +91,9 @@ public class ScanHolder : FlowBox {
 
         // If no scans were found, display placeholder
         if (scan_list.size == 0) {
-            App.instance.switch_content (App.CONTENT_TYPE.NO_SCANS);
+            ContentStack.switch_content (ContentStack.CONTENT_TYPE.NO_SCANS);
         } else {
-            App.instance.switch_content (App.CONTENT_TYPE.SCAN_LIST);
+            ContentStack.switch_content (ContentStack.CONTENT_TYPE.SCAN_LIST);
         }
 
         // Unselect all children

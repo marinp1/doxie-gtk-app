@@ -26,7 +26,7 @@ namespace DoxieUtils {
         }
 
         Variables.instance.selected_scanner = scanner;
-        App.instance.switch_content (App.CONTENT_TYPE.NO_SCANS);
+        ContentStack.switch_content (ContentStack.CONTENT_TYPE.NO_SCANS);
 
         return true;
     }

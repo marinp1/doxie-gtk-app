@@ -23,7 +23,7 @@ namespace HttpUtils {
 
     }
 
-    private Soup.Message get_http_message (REQUEST_TYPE request, string uri_string) {
+    private static Soup.Message get_http_message (REQUEST_TYPE request, string uri_string) {
 
         Soup.Session session = new Soup.Session ();
         Soup.Message message = new Soup.Message (request.to_string (), uri_string);
@@ -35,7 +35,7 @@ namespace HttpUtils {
 
     }
 
-    private void validate_message_status (uint status) {
+    private static void validate_message_status (uint status) {
 
         switch (status) {
 

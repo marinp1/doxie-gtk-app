@@ -1,4 +1,4 @@
-public class CustomHeader : Gtk.HeaderBar  {
+class CustomHeader : Gtk.HeaderBar  {
 
     public static weak CustomHeader instance;
 
@@ -111,7 +111,7 @@ public class CustomHeader : Gtk.HeaderBar  {
         // If no devices were found, add a placeholder
         if (Variables.instance.scanner_list.size == 0) {
             button_fetch_scans.set_sensitive (false);
-            App.instance.switch_content (App.CONTENT_TYPE.NO_CONNECTION);
+            ContentStack.switch_content (ContentStack.CONTENT_TYPE.NO_CONNECTION);
             scanner_selector.hide ();
         } else if (Variables.instance.scanner_list.size == 1) {
             button_fetch_scans.set_sensitive (true);
