@@ -17,8 +17,7 @@ public class ActionBar : Gtk.Box {
         this.margin_right = 12;
         this.margin_left = 12;
 
-        Gtk.Label ocr_label = new Gtk.Label ("<b>OCR</b>");
-        ocr_label.set_use_markup (true);
+        Gtk.Label ocr_label = new Gtk.Label ("OCR");
 
         Gtk.Switch ocr_switch = new Gtk.Switch ();
 

@@ -4,12 +4,18 @@ public class ScanHolder : FlowBox {
 
     private const string scanholder_style = """
 
+        .scan {
+            border-radius: 0;
+            border: 1px solid #e1e1e1;
+            background-color: alpha(#e1e1e1, 0.25);
+        }
+
         .scan:focus {
             background-color: transparent;
         }
 
         .scan:selected {
-            background-color: alpha(#3399ff, 0.4);
+            background-color: alpha(#00d050, 0.25);
         }
 
     """;
@@ -29,8 +35,8 @@ public class ScanHolder : FlowBox {
         this.set_valign (Align.START);
         this.set_halign (Align.START);
         this.activate_on_single_click = false;
-        this.column_spacing = 6;
-        this.row_spacing = 6;
+        this.column_spacing = 12;
+        this.row_spacing = 12;
         this.set_selection_mode (SelectionMode.MULTIPLE);
         this.homogeneous = true;
 
