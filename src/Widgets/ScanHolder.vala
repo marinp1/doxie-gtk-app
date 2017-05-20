@@ -17,6 +17,12 @@ public class ScanHolder : FlowBox {
     App app;
     public static weak ScanHolder instance;
 
+    private Gee.ArrayList<string> scan_list;
+
+    public int get_scan_count () {
+        return scan_list.size;
+    }
+
     public ScanHolder (App main_app) {
         app = main_app;
 
@@ -32,6 +38,8 @@ public class ScanHolder : FlowBox {
         this.margin_right = 12;
         this.margin_left = 12;
 
+        scan_list = new Gee.ArrayList<string> ();
+
         instance = this;
 
         this.selected_children_changed.connect (() => {
@@ -46,25 +54,24 @@ public class ScanHolder : FlowBox {
     // HTTP get request
     public bool refresh_content () {
 
-        // First remove all content from flowbox
-        // Also remember to propagate changes to variables
-        // Then repopulate it
+        scan_list.clear ();
 
-        var item_count = 2;
-        for (int i = 0; i < item_count; i++) {
-            var thumbnail = new Thumbnail ("/home/marinp1/Repositories/gtk-doxie-app/src/demo1.jpg");
-            this.insert (thumbnail, -1);
-        }
-
-        int child_count = 0;
+        // TODO: Change to reading from tmp folder
+        scan_list.add ("/home/marinp1/Repositories/gtk-doxie-app/src/demo1.jpg");
 
         this.foreach((child) => {
-            child.get_style_context ().add_class ("scan");
-            Granite.Widgets.Utils.set_theming (child, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
-            child_count += 1;
+            child.destroy ();
         });
 
-        if (child_count == 0) {
+        foreach (string scan_path in scan_list) {
+            var thumbnail = new Thumbnail (scan_path);
+            this.insert (thumbnail, -1);
+            // Apply custom styling to FlowBoxChild
+            thumbnail.parent.get_style_context ().add_class ("scan");
+            Granite.Widgets.Utils.set_theming (thumbnail.parent, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
+        };
+
+        if (scan_list.size == 0) {
             app.switch_content (App.CONTENT_TYPE.NO_SCANS);
         } else {
             app.switch_content (App.CONTENT_TYPE.SCAN_LIST);
