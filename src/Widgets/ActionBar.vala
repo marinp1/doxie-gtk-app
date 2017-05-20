@@ -14,8 +14,8 @@ public class ActionBar : Gtk.Box {
         this.set_spacing (10);
 
         this.margin_bottom = 12;
-        this.margin_right = 12;
-        this.margin_left = 12;
+        this.margin_end = 12;
+        this.margin_start = 12;
 
         Gtk.Label ocr_label = new Gtk.Label ("OCR");
 

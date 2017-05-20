@@ -1,5 +1,7 @@
 public class Variables {
 
+    public const string TMP_FOLDER_NAME = ".com.github.marinp1.gtk-doxie-app";
+
     public bool ocr_activated = true;
     public Gee.HashMap<string, DoxieScanner> scanner_list = new Gee.HashMap<string, DoxieScanner>  ();
     public DoxieScanner selected_scanner;
@@ -11,10 +13,10 @@ public class Variables {
 
         selected_items.clear ();
 
-        new_selection.foreach ((child) => {
-            weak Thumbnail element = (Thumbnail?) child.get_child ();
+        foreach (Gtk.FlowBoxChild selected_item in new_selection) {
+            weak Thumbnail element = (Thumbnail?) selected_item.get_child ();
             selected_items.add (element.file_name);
-        });
+        }
 
     }
 

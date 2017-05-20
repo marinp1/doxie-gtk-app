@@ -41,8 +41,8 @@ public class ScanHolder : FlowBox {
         this.homogeneous = true;
 
         this.margin_top = 12;
-        this.margin_right = 12;
-        this.margin_left = 12;
+        this.margin_end = 12;
+        this.margin_start = 12;
 
         scan_list = new Gee.ArrayList<string> ();
 
@@ -62,7 +62,7 @@ public class ScanHolder : FlowBox {
 
         scan_list.clear ();
 
-        string thumbnail_location = GLib.Environment.get_tmp_dir () + "/.com.github.marinp1/gtk-doxie-app/thumbnails";
+        string thumbnail_location = GLib.Environment.get_tmp_dir () + "/" + Variables.TMP_FOLDER_NAME + "/thumbnails";
 
         try {
 
@@ -78,7 +78,7 @@ public class ScanHolder : FlowBox {
 
         } catch (FileError e) {
             
-            print (e.message);
+            print (e.message + "\n");
         
         }
 
