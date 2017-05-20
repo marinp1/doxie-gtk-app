@@ -22,11 +22,7 @@ public class ScanHolder : FlowBox {
 
     public static weak ScanHolder instance;
 
-    private Gee.ArrayList<string> scan_list;
-
-    public int get_scan_count () {
-        return scan_list.size;
-    }
+    Gee.ArrayList<string> scan_list;
 
     public ScanHolder () {
 
@@ -60,6 +56,7 @@ public class ScanHolder : FlowBox {
 
         scan_list.clear ();
 
+        // Get thumbnail paths from directory
         string thumbnail_location = GLib.Environment.get_tmp_dir () + "/" + Variables.TMP_FOLDER_NAME + "/thumbnails";
 
         try {
@@ -75,15 +72,15 @@ public class ScanHolder : FlowBox {
             }
 
         } catch (FileError e) {
-            
             print (e.message + "\n");
-        
         }
 
-        this.foreach((child) => {
+        // Remove old elements
+        foreach (Gtk.Widget child in this.get_children ()) {
             child.destroy ();
-        });
+        };
 
+        // Create new element from thumbnail file path
         foreach (string scan_path in scan_list) {
             var thumbnail = new Thumbnail (scan_path);
             this.insert (thumbnail, -1);
@@ -92,6 +89,7 @@ public class ScanHolder : FlowBox {
             Granite.Widgets.Utils.set_theming (thumbnail.parent, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
         };
 
+        // If no scans were found, display placeholder
         if (scan_list.size == 0) {
             App.instance.switch_content (App.CONTENT_TYPE.NO_SCANS);
         } else {
@@ -100,7 +98,6 @@ public class ScanHolder : FlowBox {
 
         // Unselect all children
         this.unselect_all ();
-
         this.show_all ();
 
         return true;
