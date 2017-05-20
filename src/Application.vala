@@ -41,6 +41,8 @@ public class App : Granite.Application {
 
     }
 
+    public Gtk.ApplicationWindow main_window;
+
     private const string stylesheet = """
 
         .content_stack {
@@ -57,7 +59,7 @@ public class App : Granite.Application {
     protected override void activate () {
 
         // Main window for application
-        Gtk.ApplicationWindow main_window = new Gtk.ApplicationWindow (this);
+        main_window = new Gtk.ApplicationWindow (this);
         main_window.set_border_width (0);
         main_window.set_position (Gtk.WindowPosition.CENTER);
         main_window.set_default_size (800, 800);

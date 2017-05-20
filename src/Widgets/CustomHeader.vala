@@ -21,7 +21,12 @@ public class CustomHeader : Gtk.HeaderBar  {
         // Add menu items
         // TODO: link to preference windows
         Gtk.MenuItem ocr_settings_item = new Gtk.MenuItem.with_label (_("OCR settings"));
+
         Gtk.MenuItem about_item = new Gtk.MenuItem.with_label (_("About"));
+
+        about_item.activate.connect (() => {
+            app.show_about (app.main_window);
+        });
 
         app_menu.add (ocr_settings_item);
         app_menu.add (about_item);
