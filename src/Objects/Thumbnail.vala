@@ -18,9 +18,7 @@ public class Thumbnail : Gtk.Box {
         try {
           pixel_buffer = new Pixbuf.from_file_at_scale (img_path, 160, 160, true);
           thumbnail_image = new Image.from_pixbuf (pixel_buffer);
-          // TODO: Set label to be file name
-          file_name = "somepath";
-          thumbnail_label = new Label (file_name);
+          thumbnail_label = new Label (GLib.Path.get_basename (img_path));
         } catch (GLib.Error ex) {
           print (_("Image " + img_path + " not found!\n"));
         }

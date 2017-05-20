@@ -67,7 +67,7 @@ public class ScanHolder : FlowBox {
 
                 string thumbnail_path = Path.build_filename (thumbnail_location, thumbnail_name);
                 scan_list.add (thumbnail_path);
-                
+
             }
 
         } catch (FileError e) {
