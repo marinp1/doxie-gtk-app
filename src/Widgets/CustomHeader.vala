@@ -53,6 +53,8 @@ class CustomHeader : Gtk.HeaderBar  {
         menu_button.set_image (new Gtk.Image.from_icon_name("open-menu", Gtk.IconSize.LARGE_TOOLBAR));
         menu_button.set_popup (menu);
 
+        menu.show_all ();
+
         return menu_button;
 
     }

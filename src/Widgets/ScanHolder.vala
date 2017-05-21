@@ -38,17 +38,14 @@ class ScanHolder : FlowBox {
 
         instance.scan_list.clear ();
 
-        // Get thumbnail paths from directory
-        string thumbnail_location = GLib.Environment.get_tmp_dir () + "/" + Variables.TMP_FOLDER_NAME + "/thumbnails";
-
         try {
 
-            Dir thumbnail_directory = Dir.open (thumbnail_location, 0);
+            Dir thumbnail_directory = Dir.open (Variables.THUMBNAIL_LOCATION, 0);
             string? thumbnail_name = null;
 
             while ((thumbnail_name = thumbnail_directory.read_name ()) != null) {
 
-                string thumbnail_path = Path.build_filename (thumbnail_location, thumbnail_name);
+                string thumbnail_path = Path.build_filename (Variables.THUMBNAIL_LOCATION, thumbnail_name);
                 instance.scan_list.add (thumbnail_path);
 
             }

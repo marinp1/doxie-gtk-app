@@ -63,14 +63,14 @@ namespace HttpUtils {
 
     }
 
-    private Json.Object? get_request_root (Soup.Message message) {
+    private Json.Node? get_request_root_node (Soup.Message message) {
 
         try {
 
             // Parse response
             Json.Parser parser = new Json.Parser ();
             parser.load_from_data ((string) message.response_body.flatten ().data, -1);
-            Json.Object root_data = parser.get_root ().get_object ();
+            Json.Node root_data = parser.get_root ();
 
             return root_data;
 
@@ -93,7 +93,7 @@ namespace HttpUtils {
             return false;
         }
 
-        Json.Object scanner_information = get_request_root (http_request);
+        Json.Object scanner_information = get_request_root_node (http_request).get_object ();
         
         if (scanner_information == null) {
             return false;
@@ -108,11 +108,29 @@ namespace HttpUtils {
 
     public static bool get_scan_thumbnails () {
 
-        // empty tmp folder
+        // TODO: empty tmp folder
         // make get request for scan thumbnails
         // save thumbnails to a tmp folder
 
-        //string scans_uri = "http://" + scanner.ip_address + ":8080/scans.json";
+        string scans_uri = "http://" + Variables.instance.selected_scanner.ip_address + ":8080/scans.json";
+
+        print (scans_uri);
+
+        Soup.Message http_request = get_http_message (REQUEST_TYPE.GET, scans_uri);
+
+        if (http_request.status_code != Soup.Status.OK) {
+            return false;
+        }
+
+        Json.Array scan_content = get_request_root_node (http_request).get_array ();
+        
+        if (scan_content == null) {
+            return false;
+        }
+
+        scan_content.foreach_element ((arr, index, node) => {
+            print (index.to_string ());
+        });
 
         /* example response
 

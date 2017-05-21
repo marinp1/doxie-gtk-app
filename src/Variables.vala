@@ -1,6 +1,8 @@
 public class Variables {
 
-    public const string TMP_FOLDER_NAME = ".com.github.marinp1.gtk-doxie-app";
+    private const string TMP_FOLDER_NAME = ".com.github.marinp1.gtk-doxie-app";
+    public static string THUMBNAIL_LOCATION;
+    public static string SCAN_LOCATION;
 
     public bool ocr_activated = true;
     public Gee.HashMap<string, DoxieScanner> scanner_list = new Gee.HashMap<string, DoxieScanner>  ();
@@ -21,7 +23,15 @@ public class Variables {
     }
 
     public Variables () {
+        THUMBNAIL_LOCATION = GLib.Environment.get_tmp_dir () + "/" + TMP_FOLDER_NAME + "/thumbnails";
+        SCAN_LOCATION = GLib.Environment.get_tmp_dir () + "/" + TMP_FOLDER_NAME + "/scans";
+        create_temp_folders ();
         instance = this;
+    }
+
+    public static void create_temp_folders () {
+        DirUtils.create_with_parents (THUMBNAIL_LOCATION, 0777);
+        DirUtils.create_with_parents (SCAN_LOCATION, 0777);
     }
 
 }
