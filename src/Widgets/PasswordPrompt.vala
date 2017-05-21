@@ -63,7 +63,7 @@ class PasswordPrompt : Gtk.Dialog {
 	private void on_response (Gtk.Dialog source, int response_id) {
 		switch (response_id) {
 		case Gtk.ResponseType.APPLY:
-			// set password
+			Variables.instance.selected_scanner.device_password = entry_password.text;
             destroy ();
 			break;
 		case Gtk.ResponseType.CLOSE:

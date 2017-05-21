@@ -23,18 +23,42 @@ namespace HttpUtils {
 
     }
 
-    private static Soup.Message get_http_message (REQUEST_TYPE request, string uri_string) {
+    private static Soup.Message get_http_message (Soup.Session session, REQUEST_TYPE request, string uri_string) {
 
-        Soup.Session session = new Soup.Session ();
+        session.authenticate.connect ((msg, auth, retrying) => {
+            auth.authenticate ("doxie", Variables.instance.selected_scanner.device_password);
+        });
+
         Soup.Message message = new Soup.Message (request.to_string (), uri_string);
         session.send_message (message);
-
-        validate_message_status (message.status_code);
 
         return message;
 
     }
 
+    private static void fetch_file (Soup.Session session, string remote_file_path, string target_location) {
+
+        try {
+
+            Soup.Message message = get_http_message (session, REQUEST_TYPE.GET, remote_file_path);
+            uint8[] data = message.response_body.data;
+
+            string filename = GLib.Path.get_basename (remote_file_path);
+            File target_file = File.new_for_path (target_location + "/" + filename);
+            FileOutputStream target_stream = target_file.create (FileCreateFlags.NONE);
+            DataOutputStream data_stream = new DataOutputStream (target_stream);
+
+            for (int i = 0; i < data.length; i++) {
+                data_stream.put_byte (data[i]);
+            }
+
+        } catch (Error e) {
+            stdout.printf ("Error: %s\n", e.message);
+        }
+
+    }
+
+    /*
     private static void validate_message_status (uint status) {
 
         switch (status) {
@@ -46,8 +70,6 @@ namespace HttpUtils {
                 break;
 
             case Soup.Status.UNAUTHORIZED:
-                // TODO: Display toast about invalid password
-                // Prompt for password
                 break;
 
             case Soup.Status.FORBIDDEN:
@@ -62,6 +84,7 @@ namespace HttpUtils {
         }
 
     }
+    */
 
     private Json.Node? get_request_root_node (Soup.Message message) {
 
@@ -85,9 +108,11 @@ namespace HttpUtils {
     // Populates scanner information for given scanner
     public static bool fill_scanner_information (DoxieScanner scanner) {
 
+        Soup.Session session = new Soup.Session ();
+
         string hello_uri = "http://" + scanner.ip_address + ":8080/hello.json";
 
-        Soup.Message http_request = get_http_message (REQUEST_TYPE.GET, hello_uri);
+        Soup.Message http_request = get_http_message (session, REQUEST_TYPE.GET, hello_uri);
 
         if (http_request.status_code != Soup.Status.OK) {
             return false;
@@ -112,14 +137,14 @@ namespace HttpUtils {
         // make get request for scan thumbnails
         // save thumbnails to a tmp folder
 
+        Soup.Session session = new Soup.Session ();
+
         string scans_uri = "http://" + Variables.instance.selected_scanner.ip_address + ":8080/scans.json";
 
-        print (scans_uri);
+        Soup.Message http_request = get_http_message (session, REQUEST_TYPE.GET, scans_uri);
 
-        Soup.Message http_request = get_http_message (REQUEST_TYPE.GET, scans_uri);
-
-        if (http_request.status_code != Soup.Status.OK) {
-            return false;
+        if (http_request.status_code == Soup.Status.UNAUTHORIZED) {
+            CustomInfoBar.show_bar ();
         }
 
         Json.Array scan_content = get_request_root_node (http_request).get_array ();
@@ -129,7 +154,10 @@ namespace HttpUtils {
         }
 
         scan_content.foreach_element ((arr, index, node) => {
-            print (index.to_string ());
+            Json.Object scan_information = node.get_object ();
+            string scan_name = scan_information.get_string_member ("name");
+            string thumbnail_uri = "http://" + Variables.instance.selected_scanner.ip_address + ":8080/thumbnails" + scan_name;
+            fetch_file (session, thumbnail_uri, Variables.THUMBNAIL_LOCATION);
         });
 
         /* example response
@@ -148,8 +176,6 @@ namespace HttpUtils {
         ] 
 
         */
-
-        //string thumbnail_uri = "http://" + scanner.ip_address + ":8080/thumbnails" + thumbnail.name;
 
         return true;
     }

@@ -9,6 +9,8 @@ public class DoxieScanner : GLib.Object {
   public DoxieScanner (string ip) {
 
       ip_address = ip;
+      device_password = "";
+      
       bool fetch_success = HttpUtils.fill_scanner_information (this);
 
       if (fetch_success) {

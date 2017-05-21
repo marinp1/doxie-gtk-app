@@ -58,6 +58,7 @@
         src/Widgets/ContentPlaceholder.vala
         src/Widgets/ContentStack.vala
         src/Widgets/CustomHeader.vala
+        src/Widgets/CustomInfoBar.vala
         src/Widgets/PasswordPrompt.vala
         src/Widgets/ScanHolder.vala
         src/Widgets/Thumbnail.vala

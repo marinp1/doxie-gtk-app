@@ -8,6 +8,7 @@ public class App : Granite.Application {
     public Variables variables = new Variables ();
 
     public Gtk.ApplicationWindow main_window;
+    private CustomInfoBar info_bar;
 
     public App () {
         Object (application_id: "com.github.marinp1.doxie-gtk-app",
@@ -52,6 +53,8 @@ public class App : Granite.Application {
         separator.margin_bottom = 12;
 
         // Add all content to main layout
+        info_bar = new CustomInfoBar ();
+        pane.pack_start (info_bar, false, false, 0);
         pane.pack_start (content_stack, true, true, 0);
         pane.pack_start (separator, false, false, 0);
         pane.pack_start (new ActionBar (), false, false, 0);
@@ -70,6 +73,7 @@ public class App : Granite.Application {
     }
 
     private void init () {
+        CustomInfoBar.hide_bar ();
         CustomHeader.check_sensitivity ();
         GssdpUtils.initialise ();
     }

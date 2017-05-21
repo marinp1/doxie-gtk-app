@@ -9,7 +9,7 @@ namespace DoxieUtils {
         Variables.instance.scanner_list.set (ip_address, scanner);
 
         if (Variables.instance.selected_scanner == null) {
-            select_doxie (scanner);
+            Variables.instance.selected_scanner = scanner;
         }
 
         // Add device for selection
@@ -19,13 +19,16 @@ namespace DoxieUtils {
 
     // Sets doxie selection and saves password for the future
     public static bool select_doxie (DoxieScanner scanner) {
-        
-        if (scanner.password_protected) {
-            // TODO: check password validity
-            // TODO: prompt for password if invalid
-        }
 
         Variables.instance.selected_scanner = scanner;
+        
+        if (scanner.password_protected && scanner.device_password == "") {
+            new PasswordPrompt ();
+        }
+
+        // Check if password is valid
+        // CustomInfoBar.hide ();
+
         ContentStack.switch_content (ContentStack.CONTENT_TYPE.NO_SCANS);
 
         return true;
