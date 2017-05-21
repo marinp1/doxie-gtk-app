@@ -2,24 +2,6 @@ using Gtk;
 
 class ScanHolder : FlowBox {
 
-    private const string scanholder_style = """
-
-        .scan {
-            border-radius: 0;
-            border: 1px solid #e1e1e1;
-            background-color: alpha(#e1e1e1, 0.25);
-        }
-
-        .scan:focus {
-            background-color: transparent;
-        }
-
-        .scan:selected {
-            background-color: alpha(#00d050, 0.25);
-        }
-
-    """;
-
     private static weak ScanHolder instance;
 
     Gee.ArrayList<string> scan_list;
@@ -86,7 +68,7 @@ class ScanHolder : FlowBox {
             instance.insert (thumbnail, -1);
             // Apply custom styling to FlowBoxChild
             thumbnail.parent.get_style_context ().add_class ("scan");
-            Granite.Widgets.Utils.set_theming (thumbnail.parent, scanholder_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
+            Granite.Widgets.Utils.set_theming (thumbnail.parent, Styles.main_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
         };
 
         // If no scans were found, display placeholder

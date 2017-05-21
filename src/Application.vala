@@ -9,14 +9,6 @@ public class App : Granite.Application {
 
     public Gtk.ApplicationWindow main_window;
 
-    private const string stylesheet = """
-
-        .content_stack {
-            background: #fff;
-        }
-
-    """;
-
     public App () {
         Object (application_id: "com.github.marinp1.doxie-gtk-app",
         flags: ApplicationFlags.FLAGS_NONE);
@@ -38,7 +30,7 @@ public class App : Granite.Application {
         // Content stack
         ContentStack content_stack = new ContentStack ();
         content_stack.get_style_context ().add_class ("content_stack");
-        Granite.Widgets.Utils.set_theming (content_stack, stylesheet, "content_stack", Gtk.STYLE_PROVIDER_PRIORITY_USER);
+        Granite.Widgets.Utils.set_theming (content_stack, Styles.main_style, "content_stack", Gtk.STYLE_PROVIDER_PRIORITY_USER);
 
         // Initiate content placeholder
         ContentPlaceholder content_placeholder = new ContentPlaceholder ();

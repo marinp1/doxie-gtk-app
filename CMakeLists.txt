@@ -50,6 +50,7 @@
         src/Application.vala
         src/Variables.vala
         src/Objects/DoxieScanner.vala
+        src/Styles/MainStyle.vala
         src/Utils/DoxieUtils.vala
         src/Utils/GssdpUtils.vala
         src/Utils/HttpUtils.vala
