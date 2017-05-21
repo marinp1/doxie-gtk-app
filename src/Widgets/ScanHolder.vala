@@ -31,10 +31,7 @@ class ScanHolder : FlowBox {
 
     }
 
-    // Generate test content
-    // TODO: replace with content fetching from scanner with
-    // HTTP get request
-    public static bool refresh_thumbnails () {
+    public static void refresh_thumbnails () {
 
         instance.scan_list.clear ();
 
@@ -62,7 +59,7 @@ class ScanHolder : FlowBox {
         // Create new element from thumbnail file path
         foreach (string scan_path in instance.scan_list) {
             var thumbnail = new Thumbnail (scan_path);
-            instance.insert (thumbnail, -1);
+            instance.insert (thumbnail, 0);
             // Apply custom styling to FlowBoxChild
             thumbnail.parent.get_style_context ().add_class ("scan");
             Granite.Widgets.Utils.set_theming (thumbnail.parent, Styles.main_style, "scan", Gtk.STYLE_PROVIDER_PRIORITY_USER);
@@ -78,8 +75,6 @@ class ScanHolder : FlowBox {
         // Unselect all children
         instance.unselect_all ();
         instance.show_all ();
-
-        return true;
 
     }
 

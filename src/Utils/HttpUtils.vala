@@ -53,38 +53,10 @@ namespace HttpUtils {
             }
 
         } catch (Error e) {
-            stdout.printf ("Error: %s\n", e.message);
+            print (e.message);
         }
 
     }
-
-    /*
-    private static void validate_message_status (uint status) {
-
-        switch (status) {
-
-            case Soup.Status.OK:
-                break;
-
-            case Soup.Status.NO_CONTENT:
-                break;
-
-            case Soup.Status.UNAUTHORIZED:
-                break;
-
-            case Soup.Status.FORBIDDEN:
-                break;
-
-            case Soup.Status.NOT_FOUND:
-                break;
-
-            default:
-                break;
-
-        }
-
-    }
-    */
 
     private Json.Node? get_request_root_node (Soup.Message message) {
 
@@ -134,8 +106,6 @@ namespace HttpUtils {
     public static bool get_scan_thumbnails () {
 
         // TODO: empty tmp folder
-        // make get request for scan thumbnails
-        // save thumbnails to a tmp folder
 
         Soup.Session session = new Soup.Session ();
 
@@ -145,6 +115,7 @@ namespace HttpUtils {
 
         if (http_request.status_code == Soup.Status.UNAUTHORIZED) {
             CustomInfoBar.show_bar ();
+            return false;
         }
 
         Json.Array scan_content = get_request_root_node (http_request).get_array ();
@@ -159,23 +130,6 @@ namespace HttpUtils {
             string thumbnail_uri = "http://" + Variables.instance.selected_scanner.ip_address + ":8080/thumbnails" + scan_name;
             fetch_file (session, thumbnail_uri, Variables.THUMBNAIL_LOCATION);
         });
-
-        /* example response
-
-        [
-            {
-            "name":"/DOXIE/JPEG/IMG_0001.JPG",
-            "size":241220,
-            "modified":"2010-05-01 00:10:06"
-            },
-            {
-            "name":"/DOXIE/JPEG/IMG_0002.JPG",
-            "size":265085,
-            "modified":"2010-05-01 00:09:26"
-            }
-        ] 
-
-        */
 
         return true;
     }
