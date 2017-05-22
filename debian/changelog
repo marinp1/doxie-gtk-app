@@ -1,7 +1,5 @@
-gtk-doxie-app (0.2) precise; urgency=low
+gtk-doxie-app (0.3) precise; urgency=low
 
-  * Displays scanner thumbnails.
-  * Added password handling.
-  * Various UI and UX improvements.
+  * TODO.
 
  -- Patrik Marin <dev@patrikmarin.fi>  Thu, 18 May 2017 16:20:39 +0300

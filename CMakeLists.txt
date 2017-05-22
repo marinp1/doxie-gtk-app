@@ -13,9 +13,9 @@
     set (PKGDATADIR "${DATADIR}/com.github.marinp1.gtk-doxie-app")
 
     set (EXEC_NAME "com.github.marinp1.gtk-doxie-app")
-    set (RELEASE_NAME "Newfoundland")
-    set (VERSION "0.2")
-    set (VERSION_INFO "Connection demo")
+    set (RELEASE_NAME "Labrador retriever")
+    set (VERSION "0.3")
+    set (VERSION_INFO "Working prototype")
 
     set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}")
 
