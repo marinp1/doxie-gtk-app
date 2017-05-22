@@ -7,6 +7,8 @@ class CustomInfoBar : Gtk.InfoBar {
 		instance = this;
 		change_to_invalid_password ();
 
+		this.response.connect (on_response);
+
     }
 
 	public static void change_to_invalid_password () {
@@ -27,4 +29,14 @@ class CustomInfoBar : Gtk.InfoBar {
 	public static void hide_bar () {
 		instance.hide ();
 	}
+
+	private void on_response (Gtk.InfoBar source, int response_id) {
+		switch (response_id) {
+		case 1:
+			new PasswordPrompt();
+            destroy ();
+			break;
+		}
+	}
+
 }

@@ -24,9 +24,11 @@ namespace HttpUtils {
     }
 
     private static Soup.Message get_http_message (Soup.Session session, REQUEST_TYPE request, string uri_string) {
-
+        
         session.authenticate.connect ((msg, auth, retrying) => {
-            auth.authenticate ("doxie", Variables.instance.selected_scanner.device_password);
+            if (retrying == false) {
+                auth.authenticate ("doxie", Variables.instance.selected_scanner.device_password);
+            }
         });
 
         Soup.Message message = new Soup.Message (request.to_string (), uri_string);
@@ -45,12 +47,10 @@ namespace HttpUtils {
 
             string filename = GLib.Path.get_basename (remote_file_path);
             File target_file = File.new_for_path (target_location + "/" + filename);
-            FileOutputStream target_stream = target_file.create (FileCreateFlags.NONE);
-            DataOutputStream data_stream = new DataOutputStream (target_stream);
+            FileOutputStream target_stream = target_file.create (FileCreateFlags.REPLACE_DESTINATION);
 
-            for (int i = 0; i < data.length; i++) {
-                data_stream.put_byte (data[i]);
-            }
+            DataOutputStream data_stream = new DataOutputStream (target_stream);
+            data_stream.write (data);
 
         } catch (Error e) {
             print (e.message);
