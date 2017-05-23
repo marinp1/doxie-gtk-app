@@ -135,10 +135,20 @@ namespace HttpUtils {
     }
 
     public static bool get_scans () {
-        // make get request for actual scans
-        // save jpegs to a tmp folder
-        // pre-process images
-        // start conversion process
+
+        // TODO: empty tmp folder
+
+        Soup.Session session = new Soup.Session ();
+
+        // TODO: Display progress bar
+
+        foreach (string selected_item in Variables.instance.selected_items) {
+            string scan_uri = "http://" + Variables.instance.selected_scanner.ip_address + ":8080/scans/DOXIE/JPEG/" + selected_item;
+            fetch_file (session, scan_uri, Variables.SCAN_LOCATION);
+        }
+
+        print ("Done!");
+
         return true;
     }
 

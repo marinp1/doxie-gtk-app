@@ -24,11 +24,11 @@
 
     # now let's actually check for the required dependencies
     pkg_check_modules(DEPS REQUIRED
-      granite
-      json-glib-1.0
-      gtk+-3.0
-      libsoup-2.4
-      gssdp-1.0
+      granite>=0.4.1
+      json-glib-1.0>=1.1.2
+      gtk+-3.0>=3.18.9
+      libsoup-2.4>=2.52.2
+      gssdp-1.0>=1.0.2
     )
 
     add_definitions(${DEPS_CFLAGS})

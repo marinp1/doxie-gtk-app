@@ -41,8 +41,7 @@ class ActionBar : Gtk.Box {
     private void connect_signals () {
 
         button_export.clicked.connect (() => {
-            // TODO: Start export
-            print (Variables.instance.selected_scanner.name + "\n");
+            HttpUtils.get_scans ();
         });
 
         // Connect switch activation to application shared variable
