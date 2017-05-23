@@ -3,11 +3,7 @@ Unofficial GTK application for fetching scans from Doxie WiFi scanners with an e
 
 ## Installation
 
-PPA is available for Ubuntu 16.04
-
-1. sudo add-apt-repository ppa:patrik-marin/ppa
-2. sudo apt-get update
-3. sudo apt-get install gtk-doxie-app
+PPA will be available for installation when I manage to get it working.
 
 ## Manual installation
 
